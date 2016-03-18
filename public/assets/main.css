@@ -1,0 +1,58 @@
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*.board, .board * {
+  cursor: pointer;
+}*/
+
+.cell {
+  width: 3em;
+  height: 3em;
+  border-radius: 2px;
+  border-width: 0em;
+  margin-top: 3px;
+  margin-left: 3px;
+  box-shadow: 
+  1px 1px 0px 0px #66CC66,
+  2px 2px 0px 0px #66CC66,
+  3px 3px 0px 0px #66CC66;
+}
+
+td {
+  margin: 0em;
+  border: 0em;
+}
+
+.number {
+  background-image: url(./texture/warning.png);
+  background-size: cover;
+}
+
+.number > *{
+  font-size: 1.5em;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.foundNothing {
+  background-image: url(https://pixelatedview.files.wordpress.com/2011/12/flowers.png);
+  background-size: cover;
+
+}
+
+.covered {
+  background-image: url(./texture/hidden.jpg);
+  background-size: cover;
+}
+
+.bomb {
+  background-image: url(http://immersivegameplay.net/wp-content/uploads/2011/12/MarioBomberKamikazes.jpg);
+  background-size: cover;
+}
+
+.flag {
+  background-image: url(http://jacksbox.de/wp-content/uploads/2013/03/block_red_em.png);
+  background-size: cover;
+}
