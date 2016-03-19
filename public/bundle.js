@@ -21143,16 +21143,20 @@ var Board = _react2.default.createClass({
   makeCells: function makeCells(rowObj, rowIndex) {
     var _this = this;
 
+    var style = {
+      cursor: "url(./warning.png), auto"
+    };
     return _react2.default.createElement(
       'tr',
-      { key: rowIndex },
+      { key: rowIndex, style: style },
       rowObj.map(function (cellObj, cellIndex) {
         return _react2.default.createElement(
           'td',
-          { key: '' + rowIndex + cellIndex },
+          { key: '' + rowIndex + cellIndex, style: style },
           _react2.default.createElement(
             'button',
             {
+              style: style,
               className: _this.reveal(cellObj) + ' cell',
               onClick: function onClick() {
                 if (_this.props.progress !== 'inProgress') {
@@ -21163,7 +21167,7 @@ var Board = _react2.default.createClass({
             },
             _react2.default.createElement(
               'span',
-              null,
+              { style: style },
               ' ',
               cellObj.bombCount,
               ' '
@@ -21175,17 +21179,18 @@ var Board = _react2.default.createClass({
   },
   render: function render() {
     var style = {
-      cursor: "cell"
+      cursor: "url('./warning.png') auto"
     };
+    // cursor: "url(../../../../assets/texture/warning.png) 60 60, auto"
     return _react2.default.createElement(
       'div',
-      { className: 'board' },
+      { className: 'board', style: style },
       _react2.default.createElement(
         'table',
         { className: 'mineMap', style: style },
         _react2.default.createElement(
           'tbody',
-          null,
+          { style: style },
           this.props.matrix.whole.map(this.makeCells)
         )
       )
@@ -21296,7 +21301,6 @@ var ChoicePanel = _react2.default.createClass({
   render: function render() {
     var _this = this;
 
-    console.log('rendered choicepanel');
     return _react2.default.createElement(
       'div',
       { className: 'banner' },
@@ -21344,11 +21348,11 @@ var ChoicePanel = _react2.default.createClass({
               var value = event.target.value;
               _this.props.updateBoardSpec(key, value, _this.props.boardSpec[key]);
             } },
-          'width_',
+          'width: ',
           _react2.default.createElement('input', { name: 'x', value: this.props.boardSpec.x }),
-          'height_',
+          'height:',
           _react2.default.createElement('input', { name: 'y', value: this.props.boardSpec.y }),
-          'bombs_',
+          'bombs: ',
           _react2.default.createElement('input', { name: 'bombAmount', value: this.props.boardSpec.bombAmount })
         )
       )
@@ -21597,7 +21601,7 @@ exports.default = function (previousState, action) {
     return {
       x: 20,
       y: 10,
-      bombAmount: 10
+      bombAmount: 30
     };
   } else if (action.type === 'updateBoardSpec') {
     previousState[action.payload.key] = action.payload.value;
@@ -21609,8 +21613,8 @@ exports.default = function (previousState, action) {
   } else if (action.type === 'matrixGenerate') {
     return {
       x: Math.max(Math.min(previousState.x, 45), 20),
-      y: Math.max(Math.min(previousState.y, 45), 20),
-      bombAmount: Math.max(Math.min(previousState.bombAmount, 20), 10)
+      y: Math.max(Math.min(previousState.y, 45), 10),
+      bombAmount: Math.max(Math.min(previousState.bombAmount, 400), 30)
     };
   } else {
     return previousState;
@@ -21693,11 +21697,9 @@ exports.default = function (previousState, action) {
   if (action.type === 'matrixUpdate') {
     return action.payload;
   } else if (previousState === undefined) {
-    return _gameLogic2.default.makeMatrix(20, 10, 10);
+    return _gameLogic2.default.makeMatrix(20, 10, 30);
   } else if (action.type === 'matrixGenerate') {
-    console.log('action.payload', action);
-    console.log(Math.max(Math.min(action.payload.x, 45), 20), Math.max(Math.min(action.payload.y, 45), 20), Math.max(Math.min(action.payload.bombAmount, 20), 10));
-    return _gameLogic2.default.makeMatrix(Math.max(Math.min(action.payload.x, 45), 20), Math.max(Math.min(action.payload.y, 45), 20), Math.max(Math.min(action.payload.bombAmount, 20), 10));
+    return _gameLogic2.default.makeMatrix(Math.max(Math.min(action.payload.x, 45), 20), Math.max(Math.min(action.payload.y, 45), 10), Math.max(Math.min(action.payload.bombAmount, 400), 30));
   } else if (action.type === 'placeFlag') {
     return action.payload;
   } else {

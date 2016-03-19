@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 const ChoicePanel = React.createClass({
 
   render () {
-    console.log('rendered choicepanel');
+
     return (
       <div className = "banner">
         <div className="clickActionType">
@@ -29,9 +29,9 @@ const ChoicePanel = React.createClass({
             this.props.updateBoardSpec(key, value, this.props.boardSpec[key]);
           }}>
 
-            width_<input name='x' value={this.props.boardSpec.x}/>
-            height_<input name='y' value={this.props.boardSpec.y} />
-            bombs_<input name='bombAmount' value={this.props.boardSpec.bombAmount}/>
+            width: <input name='x' value={this.props.boardSpec.x}/>
+            height:<input name='y' value={this.props.boardSpec.y} />
+            bombs: <input name='bombAmount' value={this.props.boardSpec.bombAmount}/>
 
           </form>
 

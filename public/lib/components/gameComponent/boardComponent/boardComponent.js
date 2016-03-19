@@ -21,11 +21,15 @@ const Board = React.createClass({
 
 
   makeCells (rowObj, rowIndex) {
-    return (<tr key={rowIndex}>
+    let style = {
+      cursor: "url(./warning.png), auto"
+    };
+    return (<tr key={rowIndex} style={style}>
         {rowObj.map( (cellObj, cellIndex) => {
           return (
-              <td key={''+ rowIndex + cellIndex}>
+              <td key={''+ rowIndex + cellIndex} style={style}>
                 <button 
+                style={style}
                 className={ this.reveal(cellObj) + ' cell' }
                 onClick = { () => {
                     if (this.props.progress !== 'inProgress') {return; }
@@ -33,7 +37,7 @@ const Board = React.createClass({
                   }
                 }
                 >
-                <span> { cellObj.bombCount} </span>
+                <span style={style} > { cellObj.bombCount} </span>
                 </button>
               </td>
             );
@@ -43,12 +47,13 @@ const Board = React.createClass({
 
   render () {
     let style = {
-      cursor: "cell"
+      cursor: "url('./warning.png') auto"
     };
+      // cursor: "url(../../../../assets/texture/warning.png) 60 60, auto"
     return (
-        <div className="board"> 
+        <div className="board" style={style}> 
           <table  className="mineMap" style={style}>
-            <tbody>
+            <tbody style={style}>
              {this.props.matrix.whole.map(this.makeCells)}
             </tbody>
           </table>
