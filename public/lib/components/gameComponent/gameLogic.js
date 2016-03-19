@@ -1,4 +1,6 @@
-function makeMatrix (columnAmount=10, rowAmount=10, bombAmount=3) {
+function makeMatrix (columnAmount, rowAmount, bombAmount) {
+    //total size should not be larger than 2000
+
     var matrix = [], regularCells = {};
     for (var i = 0; i < rowAmount ; i++){
         matrix[i] = [];
@@ -16,6 +18,7 @@ function makeMatrix (columnAmount=10, rowAmount=10, bombAmount=3) {
     }
     
     var randomX, randomY, bombs = [];
+    bombAmount = columnAmount * rowAmount < bombAmount ? columnAmount * rowAmount : bombAmount;
     while (bombAmount) {
         randomX = Math.floor( Math.random() * columnAmount );
         randomY = Math.floor( Math.random() * rowAmount );
@@ -30,7 +33,7 @@ function makeMatrix (columnAmount=10, rowAmount=10, bombAmount=3) {
     }
     
     return {
-        matrix: matrix,
+        whole: matrix,
         bombs: bombs,
         regularCells: regularCells
     };
@@ -45,36 +48,37 @@ function getSurroundSqrt (matrix, x, y) {
     return topRow.concat(leftCell, rightCell, bottomRow);
 }
 
-function clickToReveal (matrix, x, y, regularCells) {
 
-    if (matrix[y][x].stat === 'bomb' ) {
-        //true for game over    
-        return true;
+function clickToReveal (matrix, x, y) {
+
+    if (matrix.whole[y][x].stat === 'bomb' ) {
+        //true for game over
+        matrix.exploded = true;   
+        return matrix;
     }
     
-    var surroundSqr = getSurroundSqrt(matrix, x, y);
+    var surroundSqr = getSurroundSqrt(matrix.whole, x, y);
     var surroundBombCount = surroundSqr.reduce( (bombCount, cell) => {
         return bombCount + (cell.stat === 'bomb' ? 1 : 0);
     }, 0 );
     
-    matrix[y][x].revealed = true;
+    matrix.whole[y][x].revealed = true;
     //this cell has been revealed, so delete it from the regularCells to make it easier for checking winning condition
-    console.log('deleting:', ''+y+x );
-    delete regularCells[''+y+x];
+    delete matrix.regularCells[''+y+x];
     if (surroundBombCount === 0 ) {
         surroundSqr.forEach( (cell) => {
             if (!cell.revealed) {
-                clickToReveal(matrix, cell.x, cell.y, regularCells);
+                clickToReveal(matrix, cell.x, cell.y);
             }
         } );
     } else {
-        matrix[y][x].bombCount = surroundBombCount;
+        matrix.whole[y][x].bombCount = surroundBombCount;
     }
-    return false;
+    return matrix;
+    
 }
 
 export default {
     makeMatrix: makeMatrix,
-    getSurroundSqrt: getSurroundSqrt,
     clickToReveal: clickToReveal
 };

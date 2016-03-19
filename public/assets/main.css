@@ -1,11 +1,99 @@
+body {
+  background-image: url(./texture/background.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50%;
+  background-color: #3fc7b4;
+  font-family: sans-serif;
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/*.board, .board * {
-  cursor: pointer;
-}*/
+.banner {
+  background-image: url(./texture/background.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50%;
+  position: fixed;
+  padding: 0px;
+  top: 0em;
+  left: 0em;
+  height: 6em;
+  width: 100%;
+  z-index: 100;
+}
+
+.banner > * {
+  float: right;
+}
+
+.clickActionType, .boardSpec {
+  font-size: 1.5em;
+  margin-right: 1.5em;
+}
+
+.clickActionType h1 {
+  margin: 0.1em;
+}
+
+.clickActionType button, .boardSpec button{
+  font-size: 1em;
+  width: 6em;
+  /*height: 3em;*/
+  background-color: yellow;
+  border: none;
+  border-radius: 2px;
+  margin-left: 1em;
+}
+
+.clickActionType button:active, .boardSpec button:active {
+  position: relative;
+  background-color: aqua;
+  top: 6px;
+  left: 6px;
+}
+
+.boardSpec {
+  position: relative;
+  top: 85%;
+  transform: translateY(-50%);
+  width: 50%;
+  /*float: right;*/
+}
+
+.boardSpec > * {
+  float: right;
+}
+
+.boardSpec form {
+}
+
+.boardSpec input {
+  font-size: 1em;
+  font-weight: bold;
+  width: 2em;
+  height: 1em;
+  border: none;
+  border-radius: 3px;
+  background-color: aqua;
+}
+
+
+
+.board{
+  position: absolute;
+  width: 100%;
+  top: 10em;
+  z-index: 1;
+}
+
+.mineMap {
+  margin: 2em auto;
+  border-radius: 0.5em; 
+}
 
 .cell {
   width: 3em;
@@ -15,15 +103,13 @@ table {
   margin-top: 3px;
   margin-left: 3px;
   box-shadow: 
-  1px 1px 0px 0px #66CC66,
-  2px 2px 0px 0px #66CC66,
-  3px 3px 0px 0px #66CC66;
+  1px 1px 0px 0px #ffaa00,
+  2px 2px 0px 0px #ffaa00,
+  3px 3px 0px 0px #996600,
+  4px 4px 0px 0px #996600,
+  5px 5px 0px 0px #996600;
 }
 
-td {
-  margin: 0em;
-  border: 0em;
-}
 
 .number {
   background-image: url(./texture/warning.png);

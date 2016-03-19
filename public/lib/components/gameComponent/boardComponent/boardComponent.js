@@ -1,4 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import makeAMove from './gameControl.js';
+import ReactCSSTransitionGroup from "../../../../../node_modules/react/lib/ReactCSSTransitionGroup.js";
 
 const Board = React.createClass({
 
@@ -14,6 +18,8 @@ const Board = React.createClass({
     }
   },
 
+
+
   makeCells (rowObj, rowIndex) {
     return (<tr key={rowIndex}>
         {rowObj.map( (cellObj, cellIndex) => {
@@ -22,7 +28,8 @@ const Board = React.createClass({
                 <button 
                 className={ this.reveal(cellObj) + ' cell' }
                 onClick = { () => {
-                    this.props.makeAMove(cellObj.x, cellObj.y);
+                    if (this.props.progress !== 'inProgress') {return; }
+                    this.props.makeAMove(this.props.matrix, cellObj.x, cellObj.y, this.props.userActionType);
                   }
                 }
                 >
@@ -39,17 +46,31 @@ const Board = React.createClass({
       cursor: "cell"
     };
     return (
-        <div> 
-          <h1> this is a big board here!</h1>
-          <table className="board" style={style}>
+        <div className="board"> 
+          <table  className="mineMap" style={style}>
             <tbody>
-             {this.props.matrix.map(this.makeCells)}
+             {this.props.matrix.whole.map(this.makeCells)}
             </tbody>
           </table>
         </div>
       );
   }
-
 });
 
-export default Board;
+
+
+function mapStateToProps (state) {
+  return {
+    matrix: state.matrix,
+    userActionType: state.userActionType,
+    progress: state.progress
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    makeAMove: makeAMove
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);
