@@ -21172,11 +21172,12 @@ var Board = _react2.default.createClass({
             {
               style: style,
               className: _this.reveal(cellObj) + ' cell',
-              onClick: function onClick() {
-                if (_this.props.progress !== 'inProgress') {
+              onClick: function onClick(event) {
+                if (_this.props.progress !== 'inProgress' || cellObj.flag) {
                   return;
+                } else {
+                  _this.props.makeAMove(_this.props.matrix, cellObj.x, cellObj.y, _this.props.userActionName);
                 }
-                _this.props.makeAMove(_this.props.matrix, cellObj.x, cellObj.y, _this.props.userActionName);
               }
             },
             _react2.default.createElement(
