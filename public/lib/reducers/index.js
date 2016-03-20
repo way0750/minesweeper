@@ -7,7 +7,7 @@ import boardSpecReducer from './boardSpecReducer.js';
 
 export default combineReducers({
   progress: gameProgressReducer,
-  userActionType: userActionTypeReducer,
+  userAction: userActionTypeReducer,
   matrix: matrixReducer,
   boardSpec: boardSpecReducer
 });

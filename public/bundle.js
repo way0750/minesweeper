@@ -21102,7 +21102,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _react2.default.createElement(App, null)
 ), document.getElementById("content"));
 
-},{"./components/gameComponent/gameComponent.js":190,"./reducers/index.js":195,"react":175,"react-dom":2,"react-redux":5,"redux":181}],187:[function(require,module,exports){
+},{"./components/gameComponent/gameComponent.js":191,"./reducers/index.js":195,"react":175,"react-dom":2,"react-redux":5,"redux":181}],187:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21120,6 +21120,10 @@ var _redux = require('redux');
 var _gameControl = require('./gameControl.js');
 
 var _gameControl2 = _interopRequireDefault(_gameControl);
+
+var _myStoryComponent = require('./myStoryComponent/myStoryComponent.js');
+
+var _myStoryComponent2 = _interopRequireDefault(_myStoryComponent);
 
 var _ReactCSSTransitionGroup = require('../../../../../node_modules/react/lib/ReactCSSTransitionGroup.js');
 
@@ -21140,11 +21144,21 @@ var Board = _react2.default.createClass({
       return 'covered';
     }
   },
+
+
+  //this works!!!!!!!
+  // let style = {
+  //       cursor: "url(https://cdn4.iconfinder.com/data/icons/pixel-web-part-1/512/pointer1-128.png) 50 50, auto"
+  //     };
+  // to get different cursor in react:
+  // url must be actual url, no referral to local resources like ./aaa/aaa.aaa
+  // image size have to be 128 X 128 or smaller
+
   makeCells: function makeCells(rowObj, rowIndex) {
     var _this = this;
 
     var style = {
-      cursor: "url(./warning.png), auto"
+      cursor: "url(" + this.props.userActionIcon + ") 10 20, auto"
     };
     return _react2.default.createElement(
       'tr',
@@ -21162,7 +21176,7 @@ var Board = _react2.default.createClass({
                 if (_this.props.progress !== 'inProgress') {
                   return;
                 }
-                _this.props.makeAMove(_this.props.matrix, cellObj.x, cellObj.y, _this.props.userActionType);
+                _this.props.makeAMove(_this.props.matrix, cellObj.x, cellObj.y, _this.props.userActionName);
               }
             },
             _react2.default.createElement(
@@ -21178,19 +21192,16 @@ var Board = _react2.default.createClass({
     );
   },
   render: function render() {
-    var style = {
-      cursor: "url('./warning.png') auto"
-    };
-    // cursor: "url(../../../../assets/texture/warning.png) 60 60, auto"
     return _react2.default.createElement(
       'div',
-      { className: 'board', style: style },
+      { className: 'board' },
+      this.props.progress === 'inProgress' ? '' : _react2.default.createElement(_myStoryComponent2.default, null),
       _react2.default.createElement(
         'table',
-        { className: 'mineMap', style: style },
+        { className: 'mineMap' },
         _react2.default.createElement(
           'tbody',
-          { style: style },
+          null,
           this.props.matrix.whole.map(this.makeCells)
         )
       )
@@ -21201,7 +21212,8 @@ var Board = _react2.default.createClass({
 function mapStateToProps(state) {
   return {
     matrix: state.matrix,
-    userActionType: state.userActionType,
+    userActionName: state.userAction.name,
+    userActionIcon: state.userAction.icon,
     progress: state.progress
   };
 }
@@ -21214,7 +21226,7 @@ function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Board);
 
-},{"../../../../../node_modules/react/lib/ReactCSSTransitionGroup.js":40,"./gameControl.js":188,"react":175,"react-redux":5,"redux":181}],188:[function(require,module,exports){
+},{"../../../../../node_modules/react/lib/ReactCSSTransitionGroup.js":40,"./gameControl.js":188,"./myStoryComponent/myStoryComponent.js":189,"react":175,"react-redux":5,"redux":181}],188:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21279,7 +21291,39 @@ function makeAMove(matrix, x, y, userActionType) {
 
 exports.default = makeAMove;
 
-},{"../gameLogic.js":191}],189:[function(require,module,exports){
+},{"../gameLogic.js":192}],189:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import {connect} from 'react-redux';
+// import {bindActionCreators} from 'redux';
+
+var MyStory = _react2.default.createClass({
+  displayName: "MyStory",
+
+
+  render: function render() {
+    return _react2.default.createElement(
+      "div",
+      { className: "myStory" },
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    );
+  }
+
+});
+
+exports.default = MyStory;
+
+},{"react":175}],190:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21305,42 +21349,41 @@ var ChoicePanel = _react2.default.createClass({
       'div',
       { className: 'banner' },
       _react2.default.createElement(
+        'h1',
+        null,
+        'Mine Sweeper'
+      ),
+      _react2.default.createElement(
         'div',
         { className: 'clickActionType' },
-        _react2.default.createElement(
-          'h1',
-          null,
-          'Mine Sweeper'
-        ),
         _react2.default.createElement(
           'button',
           { onClick: function onClick() {
               _this.props.updateUserAction('click');
             } },
-          ' click '
+          ' use shovel'
         ),
         _react2.default.createElement(
           'button',
           { onClick: function onClick() {
               _this.props.updateUserAction('placeFlag');
             } },
-          ' flag '
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'boardSpec' },
+          ' place warning '
+        ),
         _react2.default.createElement(
           'button',
           { onClick: function onClick() {
               var x = _this.props.boardSpec.x;
               var y = _this.props.boardSpec.y;
               var bombAmount = _this.props.boardSpec.bombAmount;
-              console.log('what is this:', _this.props.boardSpec);
               _this.props.createNewGame(_this.props.boardSpec);
             } },
           ' new game '
-        ),
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'boardSpec' },
         _react2.default.createElement(
           'form',
           { onChange: function onChange(event) {
@@ -21350,7 +21393,7 @@ var ChoicePanel = _react2.default.createClass({
             } },
           'width: ',
           _react2.default.createElement('input', { name: 'x', value: this.props.boardSpec.x }),
-          'height:',
+          'height: ',
           _react2.default.createElement('input', { name: 'y', value: this.props.boardSpec.y }),
           'bombs: ',
           _react2.default.createElement('input', { name: 'bombAmount', value: this.props.boardSpec.bombAmount })
@@ -21380,10 +21423,10 @@ function updateBoardSpec(key, newValue, oldValue) {
   };
 }
 
-function updateUserAction(userActionType) {
+function updateUserAction(userActionName) {
   return {
     type: "ChangeUserActionType",
-    payload: userActionType
+    payload: userActionName
   };
 }
 
@@ -21396,7 +21439,8 @@ function createNewGame(boardSpec) {
 
 function mapStateToProps(state) {
   return {
-    userActionType: state.userActionType,
+    userActionName: state.userAction.name,
+    userActionIcon: state.userAction.icon,
     boardSpec: state.boardSpec
   };
 }
@@ -21411,7 +21455,7 @@ function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ChoicePanel);
 
-},{"react":175,"react-redux":5,"redux":181}],190:[function(require,module,exports){
+},{"react":175,"react-redux":5,"redux":181}],191:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21425,10 +21469,6 @@ var _react2 = _interopRequireDefault(_react);
 var _boardComponent = require('./boardComponent/boardComponent.js');
 
 var _boardComponent2 = _interopRequireDefault(_boardComponent);
-
-var _myStoryComponent = require('./myStoryComponent/myStoryComponent.js');
-
-var _myStoryComponent2 = _interopRequireDefault(_myStoryComponent);
 
 var _choicePanel = require('./choicePanelComponent/choicePanel.js');
 
@@ -21445,18 +21485,15 @@ var Game = _react2.default.createClass({
       'div',
       null,
       _react2.default.createElement(
-        _boardComponent2.default,
-        null,
-        this.props.progress === 'inProgress' ? undefined : _react2.default.createElement(_myStoryComponent2.default, null)
-      ),
-      _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(_choicePanel2.default, null)
-      )
+      ),
+      _react2.default.createElement(_boardComponent2.default, null)
     );
   }
 });
+// {this.props.progress === 'inProgress' ? undefined : <MyStory />}
 
 function mapStateToProps(state) {
   return {
@@ -21466,7 +21503,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Game);
 
-},{"./boardComponent/boardComponent.js":187,"./choicePanelComponent/choicePanel.js":189,"./myStoryComponent/myStoryComponent.js":192,"react":175,"react-redux":5}],191:[function(require,module,exports){
+},{"./boardComponent/boardComponent.js":187,"./choicePanelComponent/choicePanel.js":190,"react":175,"react-redux":5}],192:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21557,39 +21594,7 @@ exports.default = {
     clickToReveal: clickToReveal
 };
 
-},{}],192:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import {connect} from 'react-redux';
-// import {bindActionCreators} from 'redux';
-
-var MyStory = _react2.default.createClass({
-  displayName: 'MyStory',
-
-
-  render: function render() {
-    return _react2.default.createElement(
-      'div',
-      null,
-      'my story testing testing....'
-    );
-  }
-
-});
-
-exports.default = MyStory;
-
-},{"react":175}],193:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21681,7 +21686,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _redux.combineReducers)({
   progress: _gameProgressReducer2.default,
-  userActionType: _userActionTypeReducer2.default,
+  userAction: _userActionTypeReducer2.default,
   matrix: _matrixReducer2.default,
   boardSpec: _boardSpecReducer2.default
 });
@@ -21713,7 +21718,7 @@ var _gameLogic2 = _interopRequireDefault(_gameLogic);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../components/gameComponent/gameLogic.js":191}],197:[function(require,module,exports){
+},{"../components/gameComponent/gameLogic.js":192}],197:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21721,13 +21726,26 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (previousState, action) {
+  var iconUrl = {
+    'click': 'https://cldup.com/g0zM8B8B3g.png',
+    'placeFlag': 'https://cldup.com/QKrrJwkzUk.png'
+  };
 
   if (action.type === 'ChangeUserActionType') {
-    return action.payload;
+    return {
+      name: action.payload,
+      icon: iconUrl[action.payload]
+    };
   } else if (action.type === 'matrixGenerate') {
-    return 'click';
+    return {
+      name: 'click',
+      icon: iconUrl.click
+    };
   }
-  return previousState || 'click';
+  return previousState || {
+    name: 'click',
+    icon: iconUrl.click
+  };
 };
 
 },{}]},{},[186,187,188,189,190,191,192,193,194,195,196,197]);

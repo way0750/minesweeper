@@ -27,27 +27,33 @@ table {
 }
 
 .banner > * {
-  float: right;
+  float: left;
+  /*outline: red 1px solid;*/
+  margin-top: 0.2em;
+  margin-left: 1em;
+  margin-bottom: 0em;
 }
 
 .clickActionType, .boardSpec {
   font-size: 1.5em;
   font-family: Slackey;
-  margin-right: 1.5em;
 }
 
-.clickActionType h1 {
-  margin: 0.1em;
+.clickActionType {
+  min-width: 11em;
 }
 
 .clickActionType button, .boardSpec button{
-  font-size: 1em;
+  font-size: 0.5em;
   font-family: Slackey;
   width: 6em;
   background-color: yellow;
   border: none;
   border-radius: 2px;
-  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 0.4em;
+  margin-top: 0.2em;
+  float: left;
 }
 
 .clickActionType button:active, .boardSpec button:active {
@@ -58,25 +64,12 @@ table {
 }
 
 .boardSpec {
-  background-color: rgba(0, 253, 255, 0.5);
-  min-width: 23em;
+  min-width: 20em;
   border-radius: 3px;
-  position: relative;
-  top: 85%;
-  transform: translateY(-50%);
-  width: 50%;
-  /*float: right;*/
-}
-
-.boardSpec > * {
-  float: right;
-}
-
-.boardSpec form {
+  vertical-align: middle;
 }
 
 .boardSpec input {
-  /*vertical-align: sub;*/
   font-size: 1em;
   font-family: Slackey;
   width: 2em;
@@ -88,6 +81,11 @@ table {
 
 
 
+
+
+
+
+
 .board{
   position: absolute;
   width: 100%;
@@ -95,9 +93,18 @@ table {
   z-index: 1;
 }
 
+.myStory {
+  position: fixed;
+  width: 70%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
 .mineMap {
   margin: 2em auto;
-  border-radius: 0.5em; 
+  border-radius: 0.5em;
 }
 
 .cell {
@@ -127,7 +134,7 @@ table {
 }
 
 .foundNothing {
-  background-image: url(https://pixelatedview.files.wordpress.com/2011/12/flowers.png);
+  background-image: url(./texture/flowers.png);
   background-size: cover;
 
 }
@@ -138,11 +145,11 @@ table {
 }
 
 .bomb {
-  background-image: url(http://immersivegameplay.net/wp-content/uploads/2011/12/MarioBomberKamikazes.jpg);
+  background-image: url(./texture/MarioBomberKamikazes.jpg);
   background-size: cover;
 }
 
 .flag {
-  background-image: url(http://jacksbox.de/wp-content/uploads/2013/03/block_red_em.png);
+  background-image: url(./texture/block_red_em.png);
   background-size: cover;
 }
