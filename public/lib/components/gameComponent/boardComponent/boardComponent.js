@@ -39,9 +39,12 @@ const Board = React.createClass({
                 <button 
                 style={style}
                 className={ this.reveal(cellObj) + ' cell' }
-                onClick = { () => {
-                    if (this.props.progress !== 'inProgress') {return; }
-                    this.props.makeAMove(this.props.matrix, cellObj.x, cellObj.y, this.props.userActionName);
+                onClick = { (event) => {
+                    if (this.props.progress !== 'inProgress' || cellObj.flag) {
+                      return;
+                    } else {
+                      this.props.makeAMove(this.props.matrix, cellObj.x, cellObj.y, this.props.userActionName);
+                    }
                   }
                 }
                 >
