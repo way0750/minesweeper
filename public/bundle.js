@@ -21173,7 +21173,7 @@ var Board = _react2.default.createClass({
               style: style,
               className: _this.reveal(cellObj) + ' cell',
               onClick: function onClick(event) {
-                if (_this.props.progress !== 'inProgress' || cellObj.flag) {
+                if (_this.props.progress !== 'inProgress' || _this.props.userActionName === 'click' && cellObj.flag) {
                   return;
                 } else {
                   _this.props.makeAMove(_this.props.matrix, cellObj.x, cellObj.y, _this.props.userActionName);

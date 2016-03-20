@@ -1,5 +1,5 @@
+##[https://landminesweeper.herokuapp.com/](https://landminesweeper.herokuapp.com/)
 ### Mine Sweeper was built with these technologies:
-
 - 1: React for view
 - 2: Redux for state management
 - 3: Babel for compiling ES6 code
