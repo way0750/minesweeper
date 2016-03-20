@@ -21367,7 +21367,7 @@ var MyStory = _react2.default.createClass({
         ),
         _react2.default.createElement(
           'a',
-          { href: 'http://www.google.com' },
+          { href: 'https://github.com/way0750/minesweeper' },
           ' Source Code on GitHub '
         )
       )

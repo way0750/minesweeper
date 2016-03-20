@@ -19,7 +19,7 @@ const MyStory = React.createClass({
             <li>4: Browserify for compiling all source code</li>
             <li>5: Grunt for automating tasks</li>
           </ul>
-          <a href= "http://www.google.com"> Source Code on GitHub </a>
+          <a href= "https://github.com/way0750/minesweeper"> Source Code on GitHub </a>
         </div>
 
       </div>
