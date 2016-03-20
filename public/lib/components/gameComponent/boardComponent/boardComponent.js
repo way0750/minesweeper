@@ -53,6 +53,7 @@ const Board = React.createClass({
       </tr>);
   },
 
+        // <MyStory />
   render () {
     return (
         <div className="board"> 

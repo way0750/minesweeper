@@ -21191,6 +21191,9 @@ var Board = _react2.default.createClass({
       })
     );
   },
+
+
+  // <MyStory />
   render: function render() {
     return _react2.default.createElement(
       'div',
@@ -21292,38 +21295,96 @@ function makeAMove(matrix, x, y, userActionType) {
 exports.default = makeAMove;
 
 },{"../gameLogic.js":192}],189:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = require('react-redux');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import {connect} from 'react-redux';
 // import {bindActionCreators} from 'redux';
 
 var MyStory = _react2.default.createClass({
-  displayName: "MyStory",
+  displayName: 'MyStory',
 
 
   render: function render() {
     return _react2.default.createElement(
-      "div",
-      { className: "myStory" },
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      'div',
+      { className: 'myStory' },
+      _react2.default.createElement(
+        'h1',
+        { className: 'gameResult' },
+        ' ',
+        this.props.progress === 'lost' ? 'Oh No! ' : 'Alright! ',
+        'You ',
+        this.props.progress,
+        '!!!! '
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'appSpec' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Mine Sweeper was built with these technologies:'
+        ),
+        _react2.default.createElement(
+          'ul',
+          null,
+          _react2.default.createElement(
+            'li',
+            null,
+            '1: React for view'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            '2: Redux for state management'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            '3: Babel for compiling ES6 code'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            '4: Browserify for compiling all source code'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            '5: Grunt for automating tasks'
+          )
+        ),
+        _react2.default.createElement(
+          'a',
+          { href: 'http://www.google.com' },
+          ' Source Code on GitHub '
+        )
+      )
     );
   }
 
 });
 
-exports.default = MyStory;
+function mapStateToProps(state) {
+  return {
+    progress: state.progress
+  };
+}
 
-},{"react":175}],190:[function(require,module,exports){
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(MyStory);
+
+},{"react":175,"react-redux":5}],190:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

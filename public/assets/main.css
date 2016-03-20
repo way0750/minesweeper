@@ -24,6 +24,8 @@ table {
   height: 6em;
   width: 100%;
   z-index: 100;
+  /*border-bottom: 1em red solid;*/
+  /*-webkit-border-image: url(./texture/cloud.png) 0 10 round stretch;*/
 }
 
 .banner > * {
@@ -122,7 +124,6 @@ table {
   5px 5px 0px 0px #996600;
 }
 
-
 .number {
   background-image: url(./texture/warning.png);
   background-size: cover;
@@ -152,4 +153,13 @@ table {
 .flag {
   background-image: url(./texture/block_red_em.png);
   background-size: cover;
+}
+
+.myStory {
+  background: linear-gradient(90deg, rgba(255, 255, 102, 0.8) 0%, rgba(153, 255, 102, 0.8) 100%);
+  border-radius: 1em;
+}
+
+.myStory li {
+  list-style-type: none;
 }
