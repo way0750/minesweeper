@@ -56,6 +56,7 @@ table {
   margin-bottom: 0.4em;
   margin-top: 0.2em;
   float: left;
+  transition: all 1s;
 }
 
 .clickActionType button:active, .boardSpec button:active {
@@ -124,19 +125,41 @@ table {
   5px 5px 0px 0px #996600;
 }
 
+@keyframes testing {
+  from {
+    transform: scale(1);
+    opacity: 0;
+  }
+
+  20% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
 .number {
   background-image: url(./texture/warning.png);
   background-size: cover;
+  /*transition: all 100ms ease-in;*/
+  animation: 500ms testing ease-out;
 }
 
 .number > *{
   font-size: 1.5em;
   font-family: Slackey;
+  /*transition: all 100ms ease-in;*/
+  animation: 500ms testing ease-out;
 }
 
 .foundNothing {
   background-image: url(./texture/flowers.png);
   background-size: cover;
+  /*transition: all 100ms ease-in;*/
+  animation: 500ms testing ease-out;
 
 }
 
@@ -148,6 +171,8 @@ table {
 .bomb {
   background-image: url(./texture/MarioBomberKamikazes.jpg);
   background-size: cover;
+  /*transition: all 100ms ease-in;*/
+  animation: 500ms testing ease-out;
 }
 
 .flag {
@@ -162,4 +187,19 @@ table {
 
 .myStory li {
   list-style-type: none;
+}
+
+.enter{
+  opacity: 0;
+  transition: all 2s;
+}
+
+
+.example-appear {
+  opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+  transition: all 500ms ease-in;
 }

@@ -13,6 +13,7 @@ import Game from './components/gameComponent/gameComponent.js';
 const App = React.createClass({
 
   render : function () {
+    console.log('main app components got called');
     return (
       <div>
         <Game />

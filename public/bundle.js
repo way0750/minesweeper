@@ -21087,6 +21087,7 @@ var App = _react2.default.createClass({
 
 
   render: function render() {
+    console.log('main app components got called');
     return _react2.default.createElement(
       'div',
       null,
@@ -21212,6 +21213,15 @@ var Board = _react2.default.createClass({
     );
   }
 });
+
+/*
+<ReactCSSTransitionGroup 
+        transitionName="example" 
+        transitionAppear={true} 
+        transitionAppearTimeout={1500}
+      >
+</ReactCSSTransitionGroup>
+ */
 
 function mapStateToProps(state) {
   return {

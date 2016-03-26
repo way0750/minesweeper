@@ -32,10 +32,14 @@ const Board = React.createClass({
     let style = {
       cursor: "url(" + this.props.userActionIcon + ") 10 20, auto"
     };
-    return (<tr key={rowIndex} style={style}>
+    return (
+      <tr key={rowIndex} style={style}>
         {rowObj.map( (cellObj, cellIndex) => {
           return (
+            
               <td key={''+ rowIndex + cellIndex} style={style}>
+              
+
                 <button 
                 style={style}
                 className={ this.reveal(cellObj) + ' cell' }
@@ -48,17 +52,24 @@ const Board = React.createClass({
                   }
                 }
                 >
+
                 <span style={style} > { cellObj.bombCount} </span>
                 </button>
+
+
               </td>
+            
             );
         })}
-      </tr>);
+      </tr>
+
+      );
   },
 
         // <MyStory />
   render () {
     return (
+      
         <div className="board"> 
           {this.props.progress === 'inProgress' ? '' : <MyStory /> }
           <table  className="mineMap">
@@ -67,10 +78,19 @@ const Board = React.createClass({
             </tbody>
           </table>
         </div>
+      
       );
   }
 });
 
+/*
+<ReactCSSTransitionGroup 
+        transitionName="example" 
+        transitionAppear={true} 
+        transitionAppearTimeout={1500}
+      >
+</ReactCSSTransitionGroup>
+ */
 
 
 function mapStateToProps (state) {
