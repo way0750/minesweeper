@@ -36,10 +36,7 @@ const Board = React.createClass({
       <tr key={rowIndex} style={style}>
         {rowObj.map( (cellObj, cellIndex) => {
           return (
-            
               <td key={''+ rowIndex + cellIndex} style={style}>
-              
-
                 <button 
                 style={style}
                 className={ this.reveal(cellObj) + ' cell' }
@@ -69,7 +66,7 @@ const Board = React.createClass({
         // <MyStory />
   render () {
     let story = <ReactCSSTransitionGroup 
-        transitionName="example" 
+        transitionName="showing" 
         transitionAppear={true} 
         transitionAppearTimeout={1500}
       >
@@ -98,8 +95,6 @@ const Board = React.createClass({
       >
 </ReactCSSTransitionGroup>
  */
-
-
 function mapStateToProps (state) {
   return {
     matrix: state.matrix,

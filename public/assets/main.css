@@ -24,13 +24,10 @@ table {
   height: 6em;
   width: 100%;
   z-index: 100;
-  /*border-bottom: 1em red solid;*/
-  /*-webkit-border-image: url(./texture/cloud.png) 0 10 round stretch;*/
 }
 
 .banner > * {
   float: left;
-  /*outline: red 1px solid;*/
   margin-top: 0.2em;
   margin-left: 1em;
   margin-bottom: 0em;
@@ -117,6 +114,7 @@ table {
   border-width: 0em;
   margin-top: 3px;
   margin-left: 3px;
+  background-color: transparent;
   box-shadow: 
   1px 1px 0px 0px #ffaa00,
   2px 2px 0px 0px #ffaa00,
@@ -125,15 +123,19 @@ table {
   5px 5px 0px 0px #996600;
 }
 
-@keyframes testing {
+@keyframes cellAnimation {
   from {
-    transform: scale(1);
+    transform: scale(0.1);
     opacity: 0;
   }
 
   20% {
-    transform: scale(1.3);
+    transform: scale(1.2);
     opacity: 1;
+  }
+
+  50% {
+    transform: scale(1);
   }
 
   to {
@@ -144,22 +146,19 @@ table {
 .number {
   background-image: url(./texture/warning.png);
   background-size: cover;
-  /*transition: all 100ms ease-in;*/
-  animation: 500ms testing ease-out;
+  animation: 400ms cellAnimation;
 }
 
 .number > *{
   font-size: 1.5em;
   font-family: Slackey;
-  /*transition: all 100ms ease-in;*/
-  animation: 500ms testing ease-out;
+  animation: 400ms cellAnimation;
 }
 
 .foundNothing {
   background-image: url(./texture/flowers.png);
   background-size: cover;
-  /*transition: all 100ms ease-in;*/
-  animation: 500ms testing ease-out;
+  animation: 400ms cellAnimation;
 
 }
 
@@ -171,14 +170,13 @@ table {
 .bomb {
   background-image: url(./texture/MarioBomberKamikazes.jpg);
   background-size: cover;
-  /*transition: all 100ms ease-in;*/
-  animation: 500ms testing ease-out;
+  animation: 400ms cellAnimation;
 }
 
 .flag {
   background-image: url(./texture/block_red_em.png);
   background-size: cover;
-  animation: 500ms testing ease-out;
+  animation: 400ms cellAnimation;
 }
 
 .myStory {
@@ -190,18 +188,12 @@ table {
   list-style-type: none;
 }
 
-.enter{
-  opacity: 0;
-  transition: all 2s;
-}
-
-
-.example-appear {
-  opacity: 0.01;
-  z-index: 100;
-}
-
-.example-appear.example-appear-active {
+.showing-appear.showing-appear-active {
+  animation: 400ms cellAnimation;
   opacity: 1;
-  animation: 200ms testing ease-out;
+}
+
+.showing-appear {
+  opacity: 0;
+  z-index: 100;
 }

@@ -21200,7 +21200,7 @@ var Board = _react2.default.createClass({
     var story = _react2.default.createElement(
       _ReactCSSTransitionGroup2.default,
       {
-        transitionName: 'example',
+        transitionName: 'showing',
         transitionAppear: true,
         transitionAppearTimeout: 1500
       },
@@ -21231,7 +21231,6 @@ var Board = _react2.default.createClass({
       >
 </ReactCSSTransitionGroup>
  */
-
 function mapStateToProps(state) {
   return {
     matrix: state.matrix,
