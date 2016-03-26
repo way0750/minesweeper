@@ -21197,10 +21197,19 @@ var Board = _react2.default.createClass({
 
   // <MyStory />
   render: function render() {
+    var story = _react2.default.createElement(
+      _ReactCSSTransitionGroup2.default,
+      {
+        transitionName: 'example',
+        transitionAppear: true,
+        transitionAppearTimeout: 1500
+      },
+      _react2.default.createElement(_myStoryComponent2.default, null)
+    );
     return _react2.default.createElement(
       'div',
       { className: 'board' },
-      this.props.progress === 'inProgress' ? '' : _react2.default.createElement(_myStoryComponent2.default, null),
+      this.props.progress === 'inProgress' ? '' : story,
       _react2.default.createElement(
         'table',
         { className: 'mineMap' },

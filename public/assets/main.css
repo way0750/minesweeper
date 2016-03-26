@@ -178,6 +178,7 @@ table {
 .flag {
   background-image: url(./texture/block_red_em.png);
   background-size: cover;
+  animation: 500ms testing ease-out;
 }
 
 .myStory {
@@ -197,9 +198,10 @@ table {
 
 .example-appear {
   opacity: 0.01;
+  z-index: 100;
 }
 
 .example-appear.example-appear-active {
   opacity: 1;
-  transition: all 500ms ease-in;
+  animation: 200ms testing ease-out;
 }

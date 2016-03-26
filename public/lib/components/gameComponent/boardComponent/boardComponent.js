@@ -68,10 +68,17 @@ const Board = React.createClass({
 
         // <MyStory />
   render () {
+    let story = <ReactCSSTransitionGroup 
+        transitionName="example" 
+        transitionAppear={true} 
+        transitionAppearTimeout={1500}
+      >
+      <MyStory />
+      </ReactCSSTransitionGroup>;
     return (
       
         <div className="board"> 
-          {this.props.progress === 'inProgress' ? '' : <MyStory /> }
+          {this.props.progress === 'inProgress' ? '' : story }
           <table  className="mineMap">
             <tbody >
              {this.props.matrix.whole.map(this.makeCells)}
