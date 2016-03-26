@@ -187,13 +187,3 @@ table {
 .myStory li {
   list-style-type: none;
 }
-
-.showing-appear.showing-appear-active {
-  animation: 400ms cellAnimation;
-  opacity: 1;
-}
-
-.showing-appear {
-  opacity: 0;
-  z-index: 100;
-}

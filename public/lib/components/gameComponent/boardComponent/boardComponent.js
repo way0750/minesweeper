@@ -1,25 +1,15 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import makeAMove from './gameControl.js';
 import MyStory from './myStoryComponent/myStoryComponent.js';
+import Cell from './cellComponent/cellComponent.js';
 
 import ReactCSSTransitionGroup from "../../../../../node_modules/react/lib/ReactCSSTransitionGroup.js";
 
+
 const Board = React.createClass({
-
-  reveal (cellObj) {
-    if (cellObj.revealed) {
-      return cellObj.bombCount ? 'number' : 'foundNothing';
-    } else if (cellObj.exploded) {
-      return 'bomb';
-    } else if (cellObj.flag) {
-      return 'flag';
-    }else {
-      return 'covered';
-    }
-  },
-
 //this works!!!!!!!
 // let style = {
 //       cursor: "url(https://cdn4.iconfinder.com/data/icons/pixel-web-part-1/512/pointer1-128.png) 50 50, auto"
@@ -37,10 +27,11 @@ const Board = React.createClass({
         {rowObj.map( (cellObj, cellIndex) => {
           return (
               <td key={''+ rowIndex + cellIndex} style={style}>
-                <button 
-                style={style}
-                className={ this.reveal(cellObj) + ' cell' }
-                onClick = { (event) => {
+              <Cell 
+              style={style}
+              cellObj={cellObj}
+              userActionIcon={this.props.userActionIcon}
+              makeAMove = { (event) => {
                     if (this.props.progress !== 'inProgress' || (this.props.userActionName === 'click' && cellObj.flag)) {
                       return;
                     } else {
@@ -48,34 +39,28 @@ const Board = React.createClass({
                     }
                   }
                 }
-                >
-
-                <span style={style} > { cellObj.bombCount} </span>
-                </button>
-
-
+                />
               </td>
-            
             );
         })}
       </tr>
-
       );
   },
 
-        // <MyStory />
+  componentDidMount () {
+      this.d3Node = d3.select(ReactDOM.findDOMNode(this));
+      this.d3Node.style({opacity: 0});
+      setTimeout( () => {
+        this.d3Node.style({animation: "400ms cellAnimation", opacity: 1});
+      }, 200);
+    },
+
   render () {
-    let story = <ReactCSSTransitionGroup 
-        transitionName="showing" 
-        transitionAppear={true} 
-        transitionAppearTimeout={1500}
-      >
-      <MyStory />
-      </ReactCSSTransitionGroup>;
+
     return (
       
-        <div className="board"> 
-          {this.props.progress === 'inProgress' ? '' : story }
+        <div className="board" id="board"> 
+        {this.props.progress === 'inProgress' ? '' :  <MyStory />}
           <table  className="mineMap">
             <tbody >
              {this.props.matrix.whole.map(this.makeCells)}
@@ -87,14 +72,6 @@ const Board = React.createClass({
   }
 });
 
-/*
-<ReactCSSTransitionGroup 
-        transitionName="example" 
-        transitionAppear={true} 
-        transitionAppearTimeout={1500}
-      >
-</ReactCSSTransitionGroup>
- */
 function mapStateToProps (state) {
   return {
     matrix: state.matrix,
