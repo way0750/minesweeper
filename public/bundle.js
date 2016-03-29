@@ -21084,10 +21084,29 @@ var store = (0, _redux.createStore)(_index2.default);
 
 var App = _react2.default.createClass({
   displayName: 'App',
+  componentDidMount: function componentDidMount() {
+    this.d3Node = d3.select(_reactDom2.default.findDOMNode(this));
+    //scroll
+    window.addEventListener('scroll', function (event) {
+      var eleHeight = document.getElementById('board').offsetHeight;
+      // var w = window.innerWidth;
+      var h = window.innerHeight * 0.4;
+      // getBoundingClientRect read only, shows top right bottom left width and height of an element
+      var where = document.getElementById('board').getBoundingClientRect();
+      if (where.top < h && where.bottom > h) {
+        console.log('scroll into view', h, window.innerHeight, where.top, where.bottom);
+      }
+    });
+
+    window.addEventListener('resize', function (event) {
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      console.log('got resize', w, h);
+    });
+  },
 
 
   render: function render() {
-    console.log('main app components got called');
     return _react2.default.createElement(
       'div',
       null,
@@ -21103,7 +21122,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _react2.default.createElement(App, null)
 ), document.getElementById("content"));
 
-},{"./components/gameComponent/gameComponent.js":191,"./reducers/index.js":195,"react":175,"react-dom":2,"react-redux":5,"redux":181}],187:[function(require,module,exports){
+},{"./components/gameComponent/gameComponent.js":192,"./reducers/index.js":196,"react":175,"react-dom":2,"react-redux":5,"redux":181}],187:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21113,6 +21132,10 @@ Object.defineProperty(exports, "__esModule", {
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRedux = require('react-redux');
 
@@ -21126,6 +21149,10 @@ var _myStoryComponent = require('./myStoryComponent/myStoryComponent.js');
 
 var _myStoryComponent2 = _interopRequireDefault(_myStoryComponent);
 
+var _cellComponent = require('./cellComponent/cellComponent.js');
+
+var _cellComponent2 = _interopRequireDefault(_cellComponent);
+
 var _ReactCSSTransitionGroup = require('../../../../../node_modules/react/lib/ReactCSSTransitionGroup.js');
 
 var _ReactCSSTransitionGroup2 = _interopRequireDefault(_ReactCSSTransitionGroup);
@@ -21134,18 +21161,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Board = _react2.default.createClass({
   displayName: 'Board',
-  reveal: function reveal(cellObj) {
-    if (cellObj.revealed) {
-      return cellObj.bombCount ? 'number' : 'foundNothing';
-    } else if (cellObj.exploded) {
-      return 'bomb';
-    } else if (cellObj.flag) {
-      return 'flag';
-    } else {
-      return 'covered';
-    }
-  },
-
 
   //this works!!!!!!!
   // let style = {
@@ -21168,48 +21183,37 @@ var Board = _react2.default.createClass({
         return _react2.default.createElement(
           'td',
           { key: '' + rowIndex + cellIndex, style: style },
-          _react2.default.createElement(
-            'button',
-            {
-              style: style,
-              className: _this.reveal(cellObj) + ' cell',
-              onClick: function onClick(event) {
-                if (_this.props.progress !== 'inProgress' || _this.props.userActionName === 'click' && cellObj.flag) {
-                  return;
-                } else {
-                  _this.props.makeAMove(_this.props.matrix, cellObj.x, cellObj.y, _this.props.userActionName);
-                }
+          _react2.default.createElement(_cellComponent2.default, {
+            style: style,
+            cellObj: cellObj,
+            userActionIcon: _this.props.userActionIcon,
+            makeAMove: function makeAMove(event) {
+              if (_this.props.progress !== 'inProgress' || _this.props.userActionName === 'click' && cellObj.flag) {
+                return;
+              } else {
+                _this.props.makeAMove(_this.props.matrix, cellObj.x, cellObj.y, _this.props.userActionName);
               }
-            },
-            _react2.default.createElement(
-              'span',
-              { style: style },
-              ' ',
-              cellObj.bombCount,
-              ' '
-            )
-          )
+            }
+          })
         );
       })
     );
   },
+  componentDidMount: function componentDidMount() {
+    var _this2 = this;
 
-
-  // <MyStory />
+    this.d3Node = d3.select(_reactDom2.default.findDOMNode(this));
+    this.d3Node.style({ opacity: 0 });
+    setTimeout(function () {
+      _this2.d3Node.style({ animation: "400ms cellAnimation", opacity: 1 });
+    }, 200);
+  },
   render: function render() {
-    var story = _react2.default.createElement(
-      _ReactCSSTransitionGroup2.default,
-      {
-        transitionName: 'showing',
-        transitionAppear: true,
-        transitionAppearTimeout: 1500
-      },
-      _react2.default.createElement(_myStoryComponent2.default, null)
-    );
+
     return _react2.default.createElement(
       'div',
-      { className: 'board' },
-      this.props.progress === 'inProgress' ? '' : story,
+      { className: 'board', id: 'board' },
+      this.props.progress === 'inProgress' ? '' : _react2.default.createElement(_myStoryComponent2.default, null),
       _react2.default.createElement(
         'table',
         { className: 'mineMap' },
@@ -21223,14 +21227,6 @@ var Board = _react2.default.createClass({
   }
 });
 
-/*
-<ReactCSSTransitionGroup 
-        transitionName="example" 
-        transitionAppear={true} 
-        transitionAppearTimeout={1500}
-      >
-</ReactCSSTransitionGroup>
- */
 function mapStateToProps(state) {
   return {
     matrix: state.matrix,
@@ -21248,7 +21244,96 @@ function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Board);
 
-},{"../../../../../node_modules/react/lib/ReactCSSTransitionGroup.js":40,"./gameControl.js":188,"./myStoryComponent/myStoryComponent.js":189,"react":175,"react-redux":5,"redux":181}],188:[function(require,module,exports){
+},{"../../../../../node_modules/react/lib/ReactCSSTransitionGroup.js":40,"./cellComponent/cellComponent.js":188,"./gameControl.js":189,"./myStoryComponent/myStoryComponent.js":190,"react":175,"react-dom":2,"react-redux":5,"redux":181}],188:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = require('react-redux');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Cell = _react2.default.createClass({
+  displayName: 'Cell',
+  componentDidMount: function componentDidMount() {
+    this.d3Node = d3.select(_reactDom2.default.findDOMNode(this));
+    this.d3Node.classed({
+      cell: true,
+      covered: true
+    });
+  },
+  componentDidUpdate: function componentDidUpdate() {
+    //let d3 handle the visual never let add or delete anything from DOM
+    //if an element is not deleted then it will stay in the DOM and all of its attributes might maintain
+    //might need to reset everything
+    //
+    //rset all class to initial state else they will persist through out all sub sequence games
+
+    this.d3Node.classed({
+      cell: true,
+      covered: true,
+      bomb: false,
+      foundNothing: false,
+      number: false,
+      flag: false
+    });
+
+    var cellObj = this.props.cellObj;
+    if (cellObj.revealed) {
+      if (cellObj.bombCount) {
+        this.d3Node.classed({ covered: false, number: true });
+      } else {
+        this.d3Node.classed({ covered: false, foundNothing: true });
+      }
+    } else if (cellObj.exploded) {
+      this.d3Node.classed({ covered: false, bomb: true });
+    } else if (cellObj.flag) {
+      this.d3Node.classed({ covered: false, flag: true });
+    } else {
+      this.d3Node.classed({ covered: true });
+    }
+  },
+  render: function render() {
+    var _this = this;
+
+    var style = {
+      cursor: "url(" + this.props.userActionIcon + ") 10 20, auto"
+    };
+    return _react2.default.createElement(
+      'button',
+      { style: style, onClick: function onClick() {
+          _this.props.makeAMove();
+        } },
+      _react2.default.createElement(
+        'span',
+        { style: style },
+        ' ',
+        this.props.cellObj.bombCount,
+        ' '
+      )
+    );
+  }
+});
+
+function mapStateToProps(state) {
+  return {
+    progress: state.progress
+  };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(Cell);
+
+},{"react":175,"react-dom":2,"react-redux":5}],189:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21313,7 +21398,7 @@ function makeAMove(matrix, x, y, userActionType) {
 
 exports.default = makeAMove;
 
-},{"../gameLogic.js":192}],189:[function(require,module,exports){
+},{"../gameLogic.js":193}],190:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21326,12 +21411,29 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require('react-redux');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _reactDom = require('react-dom');
 
-// import {bindActionCreators} from 'redux';
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var MyStory = _react2.default.createClass({
   displayName: 'MyStory',
+  componentDidMount: function componentDidMount() {
+    var _this = this;
+
+    this.d3Node = d3.select(_reactDom2.default.findDOMNode(this));
+    this.d3Node.style({
+      opacity: 0
+    });
+
+    setTimeout(function () {
+      _this.d3Node.style({
+        animation: "400ms cellAnimation",
+        opacity: 1
+      });
+    }, 400);
+  },
 
 
   render: function render() {
@@ -21371,17 +21473,22 @@ var MyStory = _react2.default.createClass({
           _react2.default.createElement(
             'li',
             null,
-            '3: Babel for compiling ES6 code'
+            '3: D3.js for animation'
           ),
           _react2.default.createElement(
             'li',
             null,
-            '4: Browserify for compiling all source code'
+            '4: Babel for compiling ES6 code'
           ),
           _react2.default.createElement(
             'li',
             null,
-            '5: Grunt for automating tasks'
+            '5: Browserify for compiling all source code'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            '6: Grunt for automating tasks'
           )
         ),
         _react2.default.createElement(
@@ -21403,7 +21510,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(MyStory);
 
-},{"react":175,"react-redux":5}],190:[function(require,module,exports){
+},{"react":175,"react-dom":2,"react-redux":5}],191:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21535,7 +21642,7 @@ function mapDispatchToProps(dispatch) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ChoicePanel);
 
-},{"react":175,"react-redux":5,"redux":181}],191:[function(require,module,exports){
+},{"react":175,"react-redux":5,"redux":181}],192:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21583,7 +21690,7 @@ function mapStateToProps(state) {
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Game);
 
-},{"./boardComponent/boardComponent.js":187,"./choicePanelComponent/choicePanel.js":190,"react":175,"react-redux":5}],192:[function(require,module,exports){
+},{"./boardComponent/boardComponent.js":187,"./choicePanelComponent/choicePanel.js":191,"react":175,"react-redux":5}],193:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21674,7 +21781,7 @@ exports.default = {
     clickToReveal: clickToReveal
 };
 
-},{}],193:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21706,7 +21813,7 @@ exports.default = function (previousState, action) {
   }
 };
 
-},{}],194:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21737,7 +21844,7 @@ function checkWinning(bombs, regularCells) {
   return allBombschecked && regularCells.length === 0;
 }
 
-},{}],195:[function(require,module,exports){
+},{}],196:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21771,7 +21878,7 @@ exports.default = (0, _redux.combineReducers)({
   boardSpec: _boardSpecReducer2.default
 });
 
-},{"./boardSpecReducer.js":193,"./gameProgressReducer.js":194,"./matrixReducer.js":196,"./userActionTypeReducer.js":197,"redux":181}],196:[function(require,module,exports){
+},{"./boardSpecReducer.js":194,"./gameProgressReducer.js":195,"./matrixReducer.js":197,"./userActionTypeReducer.js":198,"redux":181}],197:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21798,7 +21905,7 @@ var _gameLogic2 = _interopRequireDefault(_gameLogic);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../components/gameComponent/gameLogic.js":192}],197:[function(require,module,exports){
+},{"../components/gameComponent/gameLogic.js":193}],198:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21828,4 +21935,4 @@ exports.default = function (previousState, action) {
   };
 };
 
-},{}]},{},[186,187,188,189,190,191,192,193,194,195,196,197]);
+},{}]},{},[186,187,188,189,190,191,192,193,194,195,196,197,198]);

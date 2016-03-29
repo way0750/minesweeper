@@ -1,8 +1,22 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-// import {bindActionCreators} from 'redux';
+import ReactDOM from 'react-dom';
 
 const MyStory = React.createClass({
+
+  componentDidMount () {
+    this.d3Node = d3.select(ReactDOM.findDOMNode(this));
+    this.d3Node.style({
+      opacity: 0
+    });
+
+    setTimeout( () => {
+      this.d3Node.style({
+        animation: "400ms cellAnimation",
+        opacity: 1
+      });
+    }, 400);
+  },
   
   render : function () {
     return (
@@ -15,9 +29,10 @@ const MyStory = React.createClass({
           <ul>
             <li>1: React for view</li>
             <li>2: Redux for state management</li>
-            <li>3: Babel for compiling ES6 code</li>
-            <li>4: Browserify for compiling all source code</li>
-            <li>5: Grunt for automating tasks</li>
+            <li>3: D3.js for animation</li>
+            <li>4: Babel for compiling ES6 code</li>
+            <li>5: Browserify for compiling all source code</li>
+            <li>6: Grunt for automating tasks</li>
           </ul>
           <a href= "https://github.com/way0750/minesweeper"> Source Code on GitHub </a>
         </div>
