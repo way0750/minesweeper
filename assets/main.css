@@ -1,0 +1,219 @@
+body {
+  background-image: url(./texture/background.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50%;
+  background-color: #3fc7b4;
+  font-family: Slackey;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.banner {
+  background-image: url(./texture/background.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50%;
+  position: fixed;
+  padding: 0px;
+  top: 0em;
+  left: 0em;
+  height: 6em;
+  width: 100%;
+  z-index: 100;
+}
+
+.banner > * {
+  float: left;
+  margin-top: 0.2em;
+  margin-left: 1em;
+  margin-bottom: 0em;
+}
+
+.clickActionType, .boardSpec {
+  font-size: 1.5em;
+  font-family: Slackey;
+}
+
+.clickActionType {
+  min-width: 11em;
+}
+
+.clickActionType button, .boardSpec button{
+  font-size: 0.5em;
+  font-family: Slackey;
+  width: 6em;
+  background-color: yellow;
+  border: none;
+  border-radius: 2px;
+  margin-right: 1em;
+  margin-bottom: 0.4em;
+  margin-top: 0.2em;
+  float: left;
+  transition: all 1s;
+}
+
+.clickActionType button:active, .boardSpec button:active {
+  position: relative;
+  background-color: aqua;
+  top: 6px;
+  left: 6px;
+}
+
+.boardSpec {
+  min-width: 20em;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.boardSpec input {
+  font-size: 1em;
+  font-family: Slackey;
+  width: 2em;
+  height: 1em;
+  border: none;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+
+
+
+
+
+
+.board{
+  position: absolute;
+  width: 100%;
+  top: 10em;
+  z-index: 1;
+}
+
+.myStory {
+  position: fixed;
+  width: 70%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.mineMap {
+  margin: 2em auto;
+  border-radius: 0.5em;
+}
+
+.cell {
+  width: 3em;
+  height: 3em;
+  border-radius: 2px;
+  border-width: 0em;
+  margin-top: 3px;
+  margin-left: 3px;
+  background-color: transparent;
+  box-shadow: 
+  1px 1px 0px 0px #ffaa00,
+  2px 2px 0px 0px #ffaa00,
+  3px 3px 0px 0px #996600,
+  4px 4px 0px 0px #996600,
+  5px 5px 0px 0px #996600;
+}
+
+@keyframes cellAnimation {
+  from {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+
+  20% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.number {
+  background-image: url(./texture/warning.png);
+  background-size: cover;
+  animation: 400ms cellAnimation;
+}
+
+.number > *{
+  font-size: 1.5em;
+  font-family: Slackey;
+  animation: 400ms cellAnimation;
+}
+
+.foundNothing {
+  background-image: url(./texture/flowers.png);
+  background-size: cover;
+  animation: 400ms cellAnimation;
+
+}
+
+.covered {
+  background-image: url(./texture/hidden.jpg);
+  background-size: cover;
+}
+
+.bomb {
+  background-image: url(./texture/MarioBomberKamikazes.jpg);
+  background-size: cover;
+  animation: 400ms cellAnimation;
+}
+
+.flag {
+  background-image: url(./texture/block_red_em.png);
+  background-size: cover;
+  animation: 400ms cellAnimation;
+}
+
+.myStory {
+  background: linear-gradient(90deg, rgba(255, 255, 102, 0.8) 0%, rgba(153, 255, 102, 0.8) 100%);
+  border-radius: 1em;
+}
+
+.myStory li {
+  list-style-type: none;
+}
+
+
+@media handheld {
+  body {
+    background-image: url(./texture/background.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 0%;
+    background-color: #3fc7b4;
+    font-family: Slackey;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    -webkit-background-size: auto auto;
+  }
+  .banner {
+    background-image: url(./texture/background.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 50%;
+    position: fixed;
+    padding: 0px;
+    top: 0em;
+    left: 0em;
+    height: 6em;
+    width: 100%;
+    z-index: 100;
+  }
+}
+
