@@ -1,4 +1,4 @@
-##[https://landminesweeper.herokuapp.com/](https://landminesweeper.herokuapp.com/)
+##[http://way0750.github.io/minesweeper/](http://way0750.github.io/minesweeper/)
 ### Mine Sweeper was built with these technologies:
 - 1: React for view
 - 2: Redux for state management
